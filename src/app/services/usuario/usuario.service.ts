@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { SubirArchivoService } from '../service.index';
 
 
 
@@ -16,7 +17,8 @@ export class UsuarioService {
   urlBackend =  environment.urlBackend;
 
   constructor( private http: HttpClient,
-               private router: Router ) {
+               private router: Router,
+               public subirService: SubirArchivoService ) {
     console.log('Servicio de Usuario listo');
     this.cargarStorage();
    }
@@ -98,6 +100,32 @@ export class UsuarioService {
                         return true;
                       })
             );
+  }
+
+  updateUsuario$( usuario: Usuario ) {
+
+    const url = this.urlBackend + '/usuario/' + this.usuario._id + '?token=' + this.token;
+
+    return this.http.put( url, usuario )
+    .pipe( map(
+        ( resp: any) => {
+          this.guardarStorage(  resp.usuario._id , this.token, resp.usuario );
+          swal( 'Usuario Actualizado Correctamente', resp.usuario.nombre, 'success');
+          return true;
+        }
+    ));
+
+  }
+
+  cambiarImagen( file: File, id: string ) {
+    this.subirService.subirArchivo( file, 'usuarios', id )
+    .then( ( resp: any ) => {
+                    console.log( resp);
+                    this.usuario.img = resp.usuarioGuardado.img;
+                    swal('Imagen Actualizada', resp.usuarioGuardado.nombre, 'success' );
+                    this.guardarStorage(  resp.usuarioGuardado._id , this.token, resp.usuarioGuardado );
+                    })
+    .catch( err => console.log(err));
   }
 
 
