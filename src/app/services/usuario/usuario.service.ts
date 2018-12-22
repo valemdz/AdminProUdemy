@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { SubirArchivoService } from '../service.index';
+import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
+import swal from 'sweetalert';
 
 
 
@@ -104,12 +105,15 @@ export class UsuarioService {
 
   updateUsuario$( usuario: Usuario ) {
 
-    const url = this.urlBackend + '/usuario/' + this.usuario._id + '?token=' + this.token;
+    const url = this.urlBackend + '/usuario/' + usuario._id + '?token=' + this.token;
 
     return this.http.put( url, usuario )
     .pipe( map(
         ( resp: any) => {
-          this.guardarStorage(  resp.usuario._id , this.token, resp.usuario );
+
+          if (  resp.usuario._id === this.usuario._id ) {
+                this.guardarStorage(  resp.usuario._id , this.token, resp.usuario );
+          }
           swal( 'Usuario Actualizado Correctamente', resp.usuario.nombre, 'success');
           return true;
         }
@@ -128,6 +132,28 @@ export class UsuarioService {
     .catch( err => console.log(err));
   }
 
+  getUsuarios$( desde: number ) {
+
+    const url = this.urlBackend + '/usuario?desde=' + desde;
+    return this.http.get( url );
+  }
+
+  buscarEnUsuario$( busqueda: string ) {
+    const url = this.urlBackend +  `/busqueda/coleccion/usuarios/${busqueda}`;
+    return this.http.get( url );
+  }
+
+  borrarUsuario$( idUsuario: string ) {
+    const url = this.urlBackend + `/usuario/${ idUsuario }?token=${this.token}`;
+    return this.http.delete( url ).pipe( map (
+                      ( resp: any ) => {
+                      swal( 'Eliminacion',
+                            `El usuario ${ resp.usuario.nombre} fue eliminado con exito`,
+                            'success');
+                      return true;
+                    }
+            ));
+  }
 
 
 }

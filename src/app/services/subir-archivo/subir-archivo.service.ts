@@ -11,7 +11,6 @@ export class SubirArchivoService {
   subirArchivo( archivo: File, tipo: string, id: string ) {
 
 
-
     let formData = new FormData();
     let xhr = new XMLHttpRequest();
 
@@ -34,8 +33,7 @@ export class SubirArchivoService {
       const url = this.urlBackend + '/upload/' + tipo + '/' + id;
       xhr.open('PUT', url, true );
       xhr.send( formData );
-    };
-
+    });
 
   }
 
