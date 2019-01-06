@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsuarioService } from 'src/app/services/service.index';
 import { Subscription } from 'rxjs';
 import { Usuario } from 'src/app/models/usuario.model';
-import swal from 'sweetalert';
 import { ModalUploadService } from 'src/app/components/modal-upload/modal-upload.service';
+
+//import swal from 'sweetalert';
 
 declare var swal: any;
 
@@ -21,6 +22,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   busquedaSubs: Subscription;
   deleteSubs: Subscription;
   updateSubs: Subscription;
+  notiSubs: Subscription;
 
   loading = false;
   cantidaPorPage = 5;
@@ -31,7 +33,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getUsuarios();
-    this._ms.notificacion.subscribe( ( resp: any) => {
+    this.notiSubs = this._ms.notificacion.subscribe( ( resp: any) => {
         swal('Imagen Actualizada', resp.usuarioGuardado.nombre, 'success' );
         if ( resp.usuarioGuardado._id === this._us.usuario._id ) {
              this._us.usuario.img = resp.usuarioGuardado.img;
@@ -126,6 +128,9 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     }
     if ( this.updateSubs ) {
         this.updateSubs.unsubscribe();
+    }
+    if ( this.notiSubs ) {
+      this.notiSubs.unsubscribe();
     }
   }
 
