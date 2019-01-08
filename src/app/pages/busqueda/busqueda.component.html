@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Hospitales</h4>
+                <table class="table table-hover" *ngIf="hospitales.length > 0">
+                    <tbody>
+                        <tr *ngFor="let h of hospitales" class="pointer" [routerLink]="['/hospitales']">
+                            <td>
+                                <img class='rounded img-fluid' [src]="h.img | imagen:'hospitales'">
+                            </td>
+                            <td>{{h.nombre}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-info" *ngIf="hospitales.length ===0"> No hay registros</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Usuarios</h4>
+                <table class="table table-hover" *ngIf="usuarios.length > 0">
+                    <tbody>
+                        <tr *ngFor="let u of usuarios" class="pointer" [routerLink]="['/usuarios']">
+                            <td>
+                                <img [src]="u.img|imagen:'usuarios'" class="img-circle w150">
+                            </td>
+                            <td>{{u.nombre}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-info" *ngIf="usuarios.length === 0">No hay registros</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Medicos</h4>
+                <table class="table table-hover" *ngIf="medicos.length > 0">
+                    <tbody>
+                        <tr *ngFor="let m of medicos" class="pointer" [routerLink]="['/medico', m._id]">
+                            <td>
+                                <img [src]="m.img | imagen:'medicos'" class="img-circle w150">
+                            </td>
+                            <td>{{ m.nombre }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="alert alert-info" *ngIf="medicos.length === 0">No hay registros</div>
+            </div>
+        </div>
+    </div>
+</div>

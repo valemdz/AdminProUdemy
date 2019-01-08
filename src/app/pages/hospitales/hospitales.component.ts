@@ -5,7 +5,7 @@ import { HospitalService } from 'src/app/services/service.index';
 import { ModalUploadService } from 'src/app/components/modal-upload/modal-upload.service';
 
 
-import swal from 'sweetalert';
+import { swal } from 'sweetalert';
 
 declare var swal: any;
 

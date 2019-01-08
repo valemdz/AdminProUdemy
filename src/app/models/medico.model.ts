@@ -1,5 +1,3 @@
-import { Hospital } from "./hospital.model";
-
 export class Medico {
 
     constructor(

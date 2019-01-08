@@ -23,6 +23,7 @@ import { HospitalesComponent } from './hospitales/hospitales.component';
 import { MedicosComponent } from './medicos/medicos.component';
 import { MedicoComponent } from './medicos/medico.component';
 import { RouterModule, ActivatedRouteSnapshot } from '@angular/router';
+import { BusquedaComponent } from './busqueda/busqueda.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { RouterModule, ActivatedRouteSnapshot } from '@angular/router';
     ModalUploadComponent,
     HospitalesComponent,
     MedicosComponent,
-    MedicoComponent
+    MedicoComponent,
+    BusquedaComponent
   ],
   exports: [
     //PagesComponent,
